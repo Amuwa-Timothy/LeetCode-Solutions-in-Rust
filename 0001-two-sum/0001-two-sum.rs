@@ -6,11 +6,13 @@ impl Solution {
     let mut record = HashMap::new();
 
     for (index, value) in nums.iter().enumerate(){
-      if record.contains_key(&(target - *value )){
-        return vec![*record.get(&(target - *value)).unwrap() as i32, index as i32];
-      }else{
+        let complement = target - *value;
+
+        if let Some(&prev_index) = record.get(&complement) {
+            return vec![prev_index as i32, index as i32];
+        }else{
         record.insert(*value, index);
-       }
+        } 
     }    
     vec![]
     }
