@@ -1,23 +1,24 @@
-use std::collections::HashMap;
+
 
 impl Solution {
     pub fn is_anagram(s: String, t: String) -> bool {
-        if s.len() != t.len() {
-            return false;
-        }
-        
-        let mut map = HashMap::new();
-        
-        for letter in s.chars() {
-            *map.entry(letter).or_insert(0) += 1;
-        }
-        
+    if s.len() != t.len() {
+        return false;
+    }
+    
+    let mut freq = [0; 26];
+    
+    for ch in s.chars() {
+        let index = (ch as u8 - b'a') as usize;
+        freq[index] += 1;
+    }
+    
+    for ch in t.chars() {
+        let index = (ch as u8 - b'a') as usize;
+        freq[index] -= 1;
+    }
+    
+    freq.iter().all(|&count| count == 0)
 
-        for letter in t.chars() {
-            let count = map.entry(letter).or_insert(0);
-            *count -= 1;
-        }
-
-        map.values().all(|&count| count == 0)
     }
 }
